@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <h5 class="card-header"><a href="{{ url()->previous() }}">‹Back</a> | {{$data->title}}</h5>
+                <h5 class="card-header"><a href="{{ route('posts.show', $data->id) }}">‹Back</a> | {{$data->title}}</h5>
                 <form action="{{ route('posts.update', $data->id) }}" method="post">
                     @csrf
                     @method('PUT')

@@ -9,7 +9,8 @@
     @stack('styles')
 </head>
 <body class="antialiased">
-<div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+<div
+    class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
@@ -25,6 +26,23 @@
     @endif
 
     <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light mb-3" style="background-color: #f9bbd0">
+            <a class="navbar-brand" href="{{ url('/') }}">{{config('app.name')}}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHead"
+                    aria-controls="navbarHead" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarHead">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{route('posts.index')}}">Posts <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('posts.create')}}">Create Blog</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         @yield('content')
     </div>
 </div>
