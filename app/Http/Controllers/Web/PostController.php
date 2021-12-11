@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -28,7 +29,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -39,6 +41,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $this->validate($request, [
+            'category_id' => ['required'],
+            'title' => ['required'],
+            'body' => ['required'],
+        ]);
+        Post::create($validated);
         return redirect()->action([self::class, 'create']);
     }
 
@@ -62,7 +70,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Post::findOrFail($id);
+        $categories = Category::all();
+        return view('admin.posts.edit', compact('data', 'categories'));
     }
 
     /**
@@ -74,6 +84,13 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validated = $this->validate($request, [
+            'category_id' => ['required'],
+            'title' => ['required'],
+            'body' => ['required'],
+        ]);
+        $data = Post::findOrFail($id);
+        $data->update($validated);
         return redirect()->action([self::class, 'edit'], $id);
     }
 
@@ -85,6 +102,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        Post::destroy($id);
         return redirect()->action([self::class, 'index']);
     }
 }
